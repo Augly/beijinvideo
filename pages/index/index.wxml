@@ -1,0 +1,67 @@
+<!--pages/index/index.wxml-->
+<!--广告位  -->
+<cover-view class='aps'>
+  <cover-view class='apsTitle'>
+    热点视频 每天更新 随时随地刷
+  </cover-view>
+  <!-- <form bindsubmit="submitInfo" report-submit='true'>
+    <button class='apsSure' hover-class='none' form-type='submit'>
+      点击订阅
+    </button>
+  </form> -->
+
+  <cover-view class='apsSure'>
+    点击订阅
+  </cover-view>
+</cover-view>
+<view class='pageScroll' style='width:100%;height:{{myheight}}px'>
+  <view class='hotType'>
+    <view class='hotTitle'>
+      每周热搜
+    </view>
+    <view class='hotScroll'>
+      <scroll-view scroll-x style="width: 100%" scroll-with-animation>
+        <view class='hotyItem'>
+          1
+        </view>
+        <view class='hotyItem'>
+          2
+        </view>
+        <view class='hotyItem'>
+          4
+        </view>
+        <view class='hotyItem'>
+          3
+        </view>
+        <view class='hotyItem'>
+          4
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class='videoArr'>
+    <view class='hotTitle'>
+      热点视频
+    </view>
+
+    <view class='videoItem' wx:for="{{videoList}}">
+      <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{index}}' src='{{item.src}}' bindplay='myplay' bindtimeupdate="videoDuration" poster='https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1530118034&di=93140b4fdeaa8def0d2f36f341670a30&src=http://pic.58pic.com/58pic/14/34/23/26c58PIC4Pq_1024.jpg'
+        wx:if="{{playIndex == index}}">
+      </video>
+      <view class='myposter' style="display: {{ playIndex == index ? 'none' : 'block' }};">
+        <image src='https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1530118034&di=93140b4fdeaa8def0d2f36f341670a30&src=http://pic.58pic.com/58pic/14/34/23/26c58PIC4Pq_1024.jpg'>
+
+        </image>
+        <button class='videoTitle' hover-class='none'>
+          这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题
+        </button>
+        <button class='iconfont icon-bofang' hover-class='none' bindtap="videoPlay" id="{{index}}"></button>
+        <button class='tominApp' hover-class='none'>1</button>
+        <view class='time'>01:30</view>
+      </view>
+
+      <view class='videoRes'>
+      </view>
+    </view>
+  </view>
+</view>
