@@ -1,20 +1,19 @@
 <!--pages/index/index.wxml-->
 <!--广告位  -->
-<cover-view class='aps'>
-  <cover-view class='apsTitle'>
-    热点视频 每天更新 随时随地刷
-  </cover-view>
-  <!-- <form bindsubmit="submitInfo" report-submit='true'>
-    <button class='apsSure' hover-class='none' form-type='submit'>
-      点击订阅
-    </button>
-  </form> -->
+<view class='mywrap'>
 
-  <cover-view class='apsSure'>
+</view>
+<view class='aps'>
+  <view class='apsTitle'>
+    热点视频 每天更新 随时随地刷
+  </view>
+  <form bindsubmit="submitInfo" report-submit='true'>
+   <button class='apsSure' form-type='sumbit'>
     点击订阅
-  </cover-view>
-</cover-view>
-<view class='pageScroll' style='width:100%;height:{{myheight}}px'>
+  </button>
+  </form>
+</view>
+<view class='pageScroll' style='width:100%;'>
   <view class='hotType'>
     <view class='hotTitle'>
       每周热搜
@@ -43,27 +42,10 @@
     <view class='hotTitle'>
       热点视频
     </view>
-
-    <view class='videoItem' wx:for="{{videoList}}">
-      <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{item.id}}'  data-index="{{index}}"  src='{{item.src}}'  bindtimeupdate="videoDuration" poster='{{item.imgSrc}}'
-        wx:if="{{playIndex == index}}">
-      </video>
-      <view class='myposter' style="display: {{playIndex == index ? 'none' : 'block'}};">
-        <image src='{{item.imgSrc}}'>
-
-        </image>
-        <button class='videoTitle' hover-class='none'>
-          这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题
-        </button>
-        <button class='iconfont icon-bofang' hover-class='none' bindtap="videoPlay" id="{{item.id}}"  data-index="{{index}}"></button>
-        <button class='tominApp' hover-class='none'>1</button>
-        <view class='time'>01:30</view>
-      </view>
-
-      <view class='videoRes'>
-        <view class='playnum'>2535次播放</view>
-        <text class='iconfont icon-zhuanfa'></text>
-      </view>
-    </view>
+    <!--自定义视频组件-->
+    <videoGroup id='videoGroup' videoList="{{videoList}}" config="{{config}}" bind:videoPlay="myvideoPlay" bind:openminiApp="myopenminiApp" bind:submitInfo='mysubmitInfo'></videoGroup>
+  </view>
+  <view class='nodata' wx:if="{{nodata}}">
+      没有更多数据了...
   </view>
 </view>

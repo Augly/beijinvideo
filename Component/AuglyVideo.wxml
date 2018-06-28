@@ -1,22 +1,26 @@
 <!--Component/AuglyVideo.wxml-->
-    <view class='videoItem' wx:for="{{videoList}}">
-      <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{item.id}}'  data-index="{{index}}"  src='{{item.src}}'  bindtimeupdate="videoDuration" poster='{{item.imgSrc}}'
-        wx:if="{{playIndex == index}}">
-      </video>
-      <view class='myposter' style="display: {{playIndex == index ? 'none' : 'block'}};">
-        <image src='{{item.imgSrc}}'>
+<view class='videoItem' wx:for="{{videoList}}">
+  <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{item.id}}' data-index="{{index}}" src='{{item.src}}' wx:if="{{playIndex == index}}">
+  </video>
+  <view class='myposter' style="display: {{playIndex==index ? 'none' : 'block'}};">
+    <image src='{{item.imgSrc}}'>
 
-        </image>
-        <button class='videoTitle' hover-class='none'>
-          这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题
-        </button>
-        <button class='iconfont icon-bofang' hover-class='none' bindtap="videoPlay" id="{{item.id}}"  data-index="{{index}}"></button>
-        <button class='tominApp' hover-class='none'>1</button>
-        <view class='time'>01:30</view>
-      </view>
-
-      <view class='videoRes'>
-        <view class='playnum'>2535次播放</view>
-        <text class='iconfont icon-zhuanfa'></text>
-      </view>
-    </view>
+    </image>
+    <form bindsubmit="submitInfo" report-submit='true'>
+      <button class='videoTitle' hover-class='none' form-type='submit'>
+        {{item.title}}
+      </button>
+    </form>
+    <form bindsubmit="submitInfo" report-submit='true'>
+      <button class='iconfont icon-bofang' hover-class='none' bindtap="videoPlay" id="{{item.id}}" data-index="{{index}}" form-type='submit'></button>
+    </form>
+    <form bindsubmit="submitInfo" report-submit='true'>
+      <button class='tominApp' hover-class='none' bindtap='openminiApp' data-index="{{index}}" wx:if="{{item.ifminiApp}}" form-type='submit'></button>
+    </form>
+    <view class='time'>{{item.time}}</view>
+  </view>
+  <view class='videoRes'>
+    <view class='playnum'>{{item._number}}次播放</view>
+    <button class='iconfont icon-zhuanfa' hover-class='none' open-type='share' data-id='{{item.id}}'></button>
+  </view>
+</view>
