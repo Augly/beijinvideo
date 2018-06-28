@@ -27,11 +27,11 @@ input{
 
 @font-face {
   font-family: 'iconfont';  /* project id 724078 */
-  src: url('//at.alicdn.com/t/font_724078_59mf7bedyqa.eot');
-  src: url('//at.alicdn.com/t/font_724078_59mf7bedyqa.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_724078_59mf7bedyqa.woff') format('woff'),
-  url('//at.alicdn.com/t/font_724078_59mf7bedyqa.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_724078_59mf7bedyqa.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_724078_43qt7yvrrsk.eot');
+  src: url('//at.alicdn.com/t/font_724078_43qt7yvrrsk.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_724078_43qt7yvrrsk.woff') format('woff'),
+  url('//at.alicdn.com/t/font_724078_43qt7yvrrsk.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_724078_43qt7yvrrsk.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -43,3 +43,5 @@ input{
 }
 
 .icon-bofang:before { content: "\e606"; }
+
+.icon-zhuanfa:before { content: "\e627"; }

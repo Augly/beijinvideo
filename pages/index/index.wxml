@@ -45,22 +45,24 @@
     </view>
 
     <view class='videoItem' wx:for="{{videoList}}">
-      <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{index}}' src='{{item.src}}' bindplay='myplay' bindtimeupdate="videoDuration" poster='https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1530118034&di=93140b4fdeaa8def0d2f36f341670a30&src=http://pic.58pic.com/58pic/14/34/23/26c58PIC4Pq_1024.jpg'
+      <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{item.id}}'  data-index="{{index}}"  src='{{item.src}}'  bindtimeupdate="videoDuration" poster='{{item.imgSrc}}'
         wx:if="{{playIndex == index}}">
       </video>
-      <view class='myposter' style="display: {{ playIndex == index ? 'none' : 'block' }};">
-        <image src='https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1530118034&di=93140b4fdeaa8def0d2f36f341670a30&src=http://pic.58pic.com/58pic/14/34/23/26c58PIC4Pq_1024.jpg'>
+      <view class='myposter' style="display: {{playIndex == index ? 'none' : 'block'}};">
+        <image src='{{item.imgSrc}}'>
 
         </image>
         <button class='videoTitle' hover-class='none'>
           这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题 这是标题
         </button>
-        <button class='iconfont icon-bofang' hover-class='none' bindtap="videoPlay" id="{{index}}"></button>
+        <button class='iconfont icon-bofang' hover-class='none' bindtap="videoPlay" id="{{item.id}}"  data-index="{{index}}"></button>
         <button class='tominApp' hover-class='none'>1</button>
         <view class='time'>01:30</view>
       </view>
 
       <view class='videoRes'>
+        <view class='playnum'>2535次播放</view>
+        <text class='iconfont icon-zhuanfa'></text>
       </view>
     </view>
   </view>
