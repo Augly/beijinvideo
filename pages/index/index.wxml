@@ -3,37 +3,33 @@
 <view class='mywrap'>
 
 </view>
-<view class='aps'>
+<view wx:if="{{mask}}">
+
+
+<view class='aps' wx:if="{{!isSubscibe}}">
   <view class='apsTitle'>
-    热点视频 每天更新 随时随地刷
+    为你追踪每周热点视频
   </view>
-  <form bindsubmit="submitInfo" report-submit='true'>
-   <button class='apsSure' form-type='sumbit'>
-    点击订阅
-  </button>
-  </form>
+  <form bindsubmit="submittwo" report-submit='true'>
+      <button class='apsSure' hover-class='none' form-type='submit'>
+         点击订阅
+      </button>
+    </form>
 </view>
-<view class='pageScroll' style='width:100%;'>
+<view class='pageScroll' style="width:100%;{{isSubscibe?'padding-top:100rpx':''}}">
   <view class='hotType'>
     <view class='hotTitle'>
       每周热搜
     </view>
     <view class='hotScroll'>
       <scroll-view scroll-x style="width: 100%" scroll-with-animation>
-        <view class='hotyItem'>
-          1
-        </view>
-        <view class='hotyItem'>
-          2
-        </view>
-        <view class='hotyItem'>
-          4
-        </view>
-        <view class='hotyItem'>
-          3
-        </view>
-        <view class='hotyItem'>
-          4
+        <view class='hotyItem' wx:for="{{hotWord}}" style="background-image: url('{{item.bgsrc}}')" bindtap='tolist' data-id='{{item.id}}' data-name='{{item.name}}' data-bg='{{item.Bgsrc}}' data-ph="{{item.ph}}" data-num='{{index+1}}'>
+          <view class='ph' style="background-image: url('{{item.ph}}')">
+            {{index+1}}
+          </view>
+          <view class='Item_main'>
+            #{{item.name}}#
+          </view>
         </view>
       </scroll-view>
     </view>
@@ -43,9 +39,14 @@
       热点视频
     </view>
     <!--自定义视频组件-->
-    <videoGroup id='videoGroup' videoList="{{videoList}}" config="{{config}}" bind:videoPlay="myvideoPlay" bind:openminiApp="myopenminiApp" bind:submitInfo='mysubmitInfo'></videoGroup>
+    <videoGroup id='videoGroup' page="{{page}}" playIndex="{{playIndex}}" videoList="{{videoList}}" aps="{{aps}}" bind:videoPlay="myvideoPlay"></videoGroup>
   </view>
   <view class='nodata' wx:if="{{nodata}}">
-      没有更多数据了...
+    我是有底线的~
   </view>
+  <view class='nodata' wx:if="{{!nodata}}">
+    上拉查看更多哦~
+  </view>
+</view>
+
 </view>

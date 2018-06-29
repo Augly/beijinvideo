@@ -1,6 +1,7 @@
 {
-  "background-color": "rgba(0,0,0,1)",
+  "navigationBarTitleText": "葫芦热点",
   "usingComponents": {
     "videoGroup": "/Component/AuglyVideo"
-  }
+  },
+  "enablePullDownRefresh":true
 }

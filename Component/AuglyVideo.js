@@ -1,4 +1,6 @@
 // Component/AuglyVideo.js
+const config=require('../utils/config.js')
+let app=getApp();
 Component({
   /**
    * 组件的属性列表
@@ -7,6 +9,20 @@ Component({
     videoList: {
       type: Array,
       value: []
+    },
+    aps:{
+      type:Object,
+      value:{
+        isShow:null
+      }
+    },
+    playIndex:{
+      type:null,
+      value:null
+    },
+    page:{
+      type: String,
+      value:'index'
     }
   },
 
@@ -16,71 +32,102 @@ Component({
   data: {
     playIndex: null,
     showPlay: false,
+    showShare:true
+  },
+  created:function(){
+    console.log(this.data.aps)
   },
   /**
    * 组件的方法列表
    */
   methods: {
     //播放视频相关方法
-    videoPlay: function (e) {
-      var length = this.data.videoList.length
-      var index = e.currentTarget.dataset.index
-      var id = e.currentTarget.id
-      if (!this.data.playIndex) { // 没有播放时播放视频
-        this.setData({
-          playIndex: index,
-          playmid: id
-        })
-        var videoContext = wx.createVideoContext('myVideo' + id, this)
-        videoContext.play()
-      } else {                    // 有播放时先将prev暂停到0s，再播放当前点击的current
-        var videoContextPrev = wx.createVideoContext('myVideo' + this.data.playmid, this)
-        videoContextPrev.seek(0)
-        videoContextPrev.pause()
-        this.setData({
-          playIndex: index,
-          playmid: id
-        })
-        var videoContextCurrent = wx.createVideoContext('myVideo' + this.data.playmid, this)
-        videoContextCurrent.play()
-      }
-      var myEventDetail = {
-        playIndex: this.data.playIndex,
-        playmid: this.data.playmid
-      } // detail对象，提供给事件监听函数
-      var myEventOption = {
+    videoPlay:function(e){
+      if (this.data.page=='share'){
+        var videoList = this.data.videoList
+        var index = e.currentTarget.dataset.index
+        var id = e.currentTarget.id
+        config.ajax('POST', {
+          id: id
+        }, config.videoPlay, (res) => {
+          if (res.data.statusMsg == "success") {
+            videoList[index].videoUrl = res.data.data
+            if (!this.data.playIndex) { // 没有播放时播放视频
+              this.setData({
+                videoList: videoList,
+                playIndex: index,
+                playmid: id
+              })
+              var videoContext = wx.createVideoContext('myVideo' + id, this)
+              videoContext.play()
+            } else {                    // 有播放时先将prev暂停到0s，再播放当前点击的current
+              var videoContextPrev = wx.createVideoContext('myVideo' + this.data.playmid, this)
+              videoContextPrev.seek(0)
+              videoContextPrev.pause()
+              this.setData({
+                videoList: videoList,
+                playIndex: index,
+                playmid: id
+              })
+              var videoContextCurrent = wx.createVideoContext('myVideo' + this.data.playmid, this)
+              videoContextCurrent.play()
+            }
+            var myEventDetail = {
+              playIndex: this.data.playIndex,
+              playmid: this.data.playmid,
+              videoContextCurrent: videoContextCurrent,
+              videoContext: videoContext
+            } // detail对象，提供给事件监听函数
+            var myEventOption = {
 
-      } // 触发事件的选项
-      this.triggerEvent('videoPlay', myEventDetail, myEventOption)
-    },
-    //打开其它小程序
-    openminiApp(e) {
-      var myEventDetail = {
-
-      } // detail对象，提供给事件监听函数
-      var myEventOption = {
-
-      } // 触发事件的选项
-      var index = e.currentTarget.dataset.index
-      var vObg = this.data.videoList[index].
-        wx.navigateToMiniProgram({
-          appId: vObg.MiniProgram.appid,
-          path: vObg.MiniProgram.path,
-          extraData: vObg.MiniProgram.extraData,
-          envVersion: vObg.MiniProgram.envVersion,
-          success(res) {
-            this.triggerEvent('openminiApp', myEventDetail, myEventOption)
+            } // 触发事件的选项
+            this.triggerEvent('videoPlay', myEventDetail, myEventOption)
           }
+        }, (res) => {
+
         })
+      }else{
+        var alldata = {
+          id: e.currentTarget.dataset.id,
+          title: e.currentTarget.dataset.title,
+          cover: e.currentTarget.dataset.cover,
+          duration: e.currentTarget.dataset.duration,
+          allnum: e.currentTarget.dataset.allnum
+        }
+        wx.navigateTo({
+          url: '/pages/share/share?alldata=' + JSON.stringify(alldata),
+          success: function(res) {
+
+          },
+          fail: function(res) {},
+          complete: function(res) {},
+        })
+        // return {
+        //   title: alldata.title,
+        //   path: '/pages/share/share?alldata=' + JSON.stringify(alldata),
+        //   imageUrl: alldata.cover
+        // }
+      } 
     },
     submitInfo(e) {
-      var myEventDetail = {
-        e: e
+      if (app.globalData.isSubscibe){
+        var params = {
+          openId: app.globalData.openid,
+          formId: e.detail.formId,
+          status:'t'
+        }
+      }else{
+        var params = {
+          openId: app.globalData.openid,
+          formId: e.detail.formId
+        }
       }
-      var myEventOption = {
+      config.ajax('POST', params,config.wxformId,(res)=>{
+        console.log(res)
+        app.globalData.isSubscibe=true
+      },(res)=>{
 
-      } // 触发事件的选项
-      this.triggerEvent('submitInfo', myEventDetail, myEventOption)
+      })
     }
   }
 })
