@@ -1,6 +1,6 @@
 // Component/AuglyVideo.js
-const config=require('../utils/config.js')
-let app=getApp();
+const config = require('../utils/config.js')
+let app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -10,19 +10,19 @@ Component({
       type: Array,
       value: []
     },
-    aps:{
-      type:Object,
-      value:{
-        isShow:null
+    aps: {
+      type: Object,
+      value: {
+        isShow: null
       }
     },
-    playIndex:{
-      type:null,
-      value:null
+    playIndex: {
+      type: null,
+      value: null
     },
-    page:{
+    page: {
       type: String,
-      value:'index'
+      value: 'index'
     }
   },
 
@@ -32,17 +32,17 @@ Component({
   data: {
     playIndex: null,
     showPlay: false,
-    showShare:true
+    showShare: true
   },
-  created:function(){
+  created: function () {
   },
   /**
    * 组件的方法列表
    */
   methods: {
     //播放视频相关方法
-    videoPlay:function(e){
-      if (this.data.page=='shareone'){
+    videoPlay: function (e) {
+      if (this.data.page == 'shareone') {
         var videoList = this.data.videoList
         var index = e.currentTarget.dataset.index
         var id = e.currentTarget.id
@@ -85,7 +85,7 @@ Component({
         }, (res) => {
 
         })
-      }else{
+      } else {
         var alldata = {
           id: e.currentTarget.dataset.id,
           title: e.currentTarget.dataset.title,
@@ -93,7 +93,7 @@ Component({
           duration: e.currentTarget.dataset.duration,
           allnum: e.currentTarget.dataset.allnum
         }
-        if(this.data.page=='share'){
+        if (this.data.page == 'share') {
           var myEventDetail = {
             alldata: JSON.stringify(alldata),
             index: e.currentTarget.dataset.index
@@ -101,7 +101,7 @@ Component({
           var myEventOption = {
 
           } // 触发事件的选项
-        }else{
+        } else {
           wx.navigateTo({
             url: '/pages/share/share?alldata=' + JSON.stringify(alldata),
             success: function (res) {
@@ -120,25 +120,25 @@ Component({
         //   path: '/pages/share/share?alldata=' + JSON.stringify(alldata),
         //   imageUrl: alldata.cover
         // }
-      } 
+      }
     },
     submitInfo(e) {
-      if (!app.globalData.isSubscibe){
+      if (!app.globalData.isSubscibe) {
         var params = {
           openId: app.globalData.openid,
           formId: e.detail.formId,
-          status:'t'
+          status: 't'
         }
-      }else{
+      } else {
         var params = {
           openId: app.globalData.openid,
           formId: e.detail.formId
         }
       }
-      config.ajax('POST', params,config.wxformId,(res)=>{
+      config.ajax('POST', params, config.wxformId, (res) => {
         console.log(res)
-        app.globalData.isSubscibe=true
-      },(res)=>{
+        app.globalData.isSubscibe = true
+      }, (res) => {
 
       })
     }

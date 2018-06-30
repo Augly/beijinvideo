@@ -12,9 +12,9 @@ Page({
     videoList: [],
     showother: true,
     playIndex: null,
-    mask:false,
+    mask: false,
     page: 'detail',
-    moretype:'上拉查看更多哦~'
+    moretype: '上拉查看更多哦~'
   },
 
   /**
@@ -25,16 +25,16 @@ Page({
       title: '数据加载中...',
       mask: true,
     })
-    var alldata=JSON.parse(options.alldata)
+    var alldata = JSON.parse(options.alldata)
     this.setData({
       alldata: alldata,
       id: alldata.id,
       name: alldata.name,
       num: alldata.num,
       ph: alldata.ph,
-      bg:alldata.bg
+      bg: alldata.bg
     })
-    page=1
+    page = 1
     this.getvideoList(this.data.id)
     this.videoGroup = this.selectComponent("#videoGroup")
     this.getAps()
@@ -142,7 +142,7 @@ Page({
   //   this.getvideoList(this.data.id)
   //   this.videoGroup = this.selectComponent("#videoGroup")
   //   this.getAps()
-    
+
   //   this.setData({
   //     playIndex: null
   //   })
@@ -153,23 +153,23 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    var that=this
+    var that = this
     page++
     that.setData({
       moretype: '正在加载中~'
     })
-    setTimeout(function(){
+    setTimeout(function () {
       that.getvideoList(that.data.id)
       that.setData({
         playIndex: null,
       })
-    },2000)
+    }, 2000)
 
   },
   /**
    * 挑往首页
    */
-  toindex:function(){
+  toindex: function () {
     wx.navigateTo({
       url: '/pages/index/index',
     })
@@ -178,7 +178,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-    var that=this
+    var that = this
     if (res.from === 'button') {
 
       if (res.target.dataset.id == '分享好友') {

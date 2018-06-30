@@ -31,7 +31,7 @@ Page({
     })
     var that = this
 
-   this.rem(594)
+    this.rem(594)
     console.log(480)
     console.log(options.alldata)
     var alldata = JSON.parse(options.alldata);
@@ -119,11 +119,11 @@ Page({
    */
   myvideoPlay: function (e) {
     console.log(e)
-    var that=this
+    var that = this
     // this.goTop()
-    var mh = e.detail.index*499;
-    mh=mh+162
-    var amh = mh * this.data.sheight/750
+    var mh = e.detail.index * 499;
+    mh = mh + 162
+    var amh = mh * this.data.sheight / 750
     var alldata = JSON.parse(e.detail.alldata);
     this.setData({
       alldataone: alldata,
@@ -161,18 +161,18 @@ Page({
     }
   },
   rem(height) {
-    var that=this
-    var myheight=''
+    var that = this
+    var myheight = ''
     wx.getSystemInfo({
       success: (res) => {
         if (height == undefined || height == null) {
 
-            myheight=res.windowHeight
+          myheight = res.windowHeight
 
         } else {
 
-            myheight=res.windowHeight - res.windowWidth / 750 * height
-        
+          myheight = res.windowHeight - res.windowWidth / 750 * height
+
         }
         that.setData({
           myheight: myheight,
@@ -210,7 +210,7 @@ Page({
 
   },
   myplay(e) {
-    
+
   },
   /**
    * 生命周期函数--监听页面显示
@@ -246,7 +246,7 @@ Page({
   //   // myvideoContext.play()
   //   that.getlistHot()
   //   that.getAps()
-   
+
   //   this.setData({
   //     playIndex: null
   //   })
@@ -272,10 +272,10 @@ Page({
   //   }, 2000)
 
   // },
-    /**
-   * 页面上拉触底事件的处理函数
-   */
-  more: function() {
+  /**
+ * 页面上拉触底事件的处理函数
+ */
+  more: function () {
     var that = this
     page++
     that.setData({
@@ -294,9 +294,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-    var that=this
+    var that = this
     var alldataone = that.data.alldataone
-    alldataone.videoUrl=''
+    alldataone.videoUrl = ''
     if (res.from === 'button') {
 
       if (res.target.dataset.id == '分享好友') {
