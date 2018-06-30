@@ -19,6 +19,8 @@ var https = "https://hv.dingapp.com",  //主域名
 
   videoShare ='/api/video/share',  //分享视频
 
+  limit='10',
+
   videoPlay = '/api/video/play';  //统计播放次数
 /**
  * 自定义request请求基类
@@ -75,5 +77,6 @@ module.exports = {
   listHot: listHot,
   videoPlay: videoPlay,
   videoShare: videoShare,
-  isSubscibe: isSubscibe
+  isSubscibe: isSubscibe,
+  limit: limit
 }

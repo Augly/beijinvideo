@@ -24,6 +24,7 @@ page {
 
 .pageScroll {
   box-sizing: border-box;
+  padding-bottom: 220rpx;
 }
 .headTop{
   width: 100%;

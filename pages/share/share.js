@@ -2,7 +2,6 @@
 var myvideoContext = null;
 var app = getApp();
 var page = 1;
-var limit = 3;
 const config = require('../../utils/config.js')
 Page({
 
@@ -17,7 +16,9 @@ Page({
     myvideo: null,
     videoList: [],
     playIndex: null,
-    mask: false
+    mask: false,
+    page: 'share',
+    moretype: '上拉查看更多哦~'
   },
 
   /**
@@ -190,11 +191,19 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    var that=this
     page++
-    this.setData({
-      nodata: true,
-      playIndex: null
+    that.setData({
+      moretype: '正在加载中~'
     })
+    setTimeout(()=>{
+      that.getvideoList()
+      that.setData({
+        nodata: true,
+        playIndex: null
+      })
+    }, 2000)
+
   },
   /**
    * 用户点击右上角分享
@@ -225,8 +234,9 @@ Page({
           allnum: res.target.dataset.allnum
         }
         return {
-          title: '小视频',
-          path: '/pages/share/share?alldata=' + JSON.stringify(alldata)
+          title: alldata.title,
+          path: '/pages/share/share?alldata=' + JSON.stringify(alldata),
+          imageUrl: alldata.cover
         }
       }
     } else {

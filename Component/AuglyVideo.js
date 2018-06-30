@@ -94,7 +94,7 @@ Component({
           duration: e.currentTarget.dataset.duration,
           allnum: e.currentTarget.dataset.allnum
         }
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/pages/share/share?alldata=' + JSON.stringify(alldata),
           success: function(res) {
 

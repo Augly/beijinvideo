@@ -1,7 +1,6 @@
 // pages/index/index.js
 var app = getApp();
 var page=1;
-var limit=3;
 const config = require('../../utils/config.js')
 Page({
 
@@ -15,7 +14,8 @@ Page({
     playIndex: null,
     mask:false,
     isSubscibe:true,
-    page:'index'
+    page:'index',
+    moretype: '上拉查看更多哦~'
   },
 
   /**
@@ -112,7 +112,7 @@ Page({
     var params = {
       hotWordsId: hotWordsId,
       page: page,
-      limit: limit
+      limit: config.limit
     }
     config.ajax('POST', params, config.videoList, (res) => {
 
@@ -132,7 +132,7 @@ Page({
           mask: true
         })
       }
-      if (res.data.data.list.length < limit) {
+      if (res.data.data.list.length < config.limit) {
         this.setData({
           nodata: true,
           allnum: res.data.data.totalCount
@@ -235,11 +235,17 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    var that=this
     page++
-    this.getvideoList()
-    this.setData({
-      playIndex: null
+    that.setData({
+      moretype: '正在加载中~'
     })
+    setTimeout(function () {
+      that.getvideoList()
+      that.setData({
+        playIndex: null,
+      })
+    }, 2000)
   },
   submittwo(e) {
     console.log(1)

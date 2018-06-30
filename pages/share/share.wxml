@@ -24,7 +24,7 @@
     </view>
     <view class='videoRes'>
       <view class='playnum'>{{alldata.allnum}}次播放</view>
-      <button class='iconfont icon-zhuanfa' hover-class='none' open-type='share' data-id='{{alldata.id}}'></button>
+      <button class='iconfont icon-zhuanfa' hover-class='none' open-type='share' data-id='{{alldata.id}}' data-title='{{alldata.title}}' data-cover='{{alldata.cover}}' data-duration='{{alldata.duration}}' data-allnum="{{alldata.allnum}}"></button>
     </view>
   </view>
 
@@ -40,7 +40,8 @@
      我是有底线的~
     </view>
     <view class='nodata' wx:if="{{!nodata}}">
-      上拉查看更多哦~
+      {{moretype}}
+      <image wx:if="{{moretype=='正在加载中~'}}" src="http://daka.wx.bronet.cn/public/myimg/loading.gif" class="Load_icon"></image>
     </view>
     <view class='bottomGroup'>
       <view class='bGitem' bindtap='toindex'>
