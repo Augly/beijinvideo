@@ -1,8 +1,11 @@
 <!--Component/AuglyVideo.wxml-->
-<view class='videoItem' wx:for="{{videoList}}">
+<view class='videoItem' wx:for="{{videoList}}" wx:key='' id='myVideo{{item.id}}'>
   <video objectFit='fill' show-center-play-btn='{{showPlay}}' id='myVideo{{item.id}}' data-index="{{index}}" src='{{item.videoUrl}}' wx:if="{{playIndex == index}}">
   </video>
   <view class='myposter' bindtap="videoPlay" id="{{item.id}}" data-index="{{index}}" style="display: {{playIndex==index ? 'none' : 'block'}};" data-id='{{item.id}}' data-title='{{item.title}}' data-cover='{{item.cover}}' data-duration='{{item.duration}}' data-allnum="{{item.palyCnt+item.playInitCnt}}">
+    <view class='zh'>
+    
+    </view>
     <image src='{{item.cover}}'>
 
     </image>

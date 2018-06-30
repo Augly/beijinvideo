@@ -27,7 +27,7 @@ Page({
     })
     var alldata=JSON.parse(options.alldata)
     this.setData({
-      alldata:alldata,
+      alldata: alldata,
       id: alldata.id,
       name: alldata.name,
       num: alldata.num,
@@ -132,22 +132,23 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-    wx.showNavigationBarLoading() 
-    wx.showLoading({
-      title: '数据加载中...',
-      mask: true,
-    })
-    page = 1
-    this.getvideoList(this.data.id)
-    this.videoGroup = this.selectComponent("#videoGroup")
-    this.getAps()
-    wx.hideNavigationBarLoading()
-    wx.stopPullDownRefresh()
-    this.setData({
-      playIndex: null
-    })
-  },
+  // onPullDownRefresh: function () {
+  //   // wx.showNavigationBarLoading() 
+  //   wx.showLoading({
+  //     title: '数据加载中...',
+  //     mask: true,
+  //   })
+  //   page = 1
+  //   this.getvideoList(this.data.id)
+  //   this.videoGroup = this.selectComponent("#videoGroup")
+  //   this.getAps()
+    
+  //   this.setData({
+  //     playIndex: null
+  //   })
+  //   // wx.hideNavigationBarLoading()
+  //   wx.stopPullDownRefresh()
+  // },
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -177,13 +178,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
+    var that=this
     if (res.from === 'button') {
 
       if (res.target.dataset.id == '分享好友') {
 
         return {
-          title: '我是分享好友的',
-          path: '/pages/detail/detail?alldata=' + JSON.stringify(this.data.alldata)
+          title: that.data.alldata.name,
+          path: '/pages/detail/detail?alldata=' + JSON.stringify(that.data.alldata)
         }
       } else {
         config.ajax('POST', {
@@ -209,8 +211,8 @@ Page({
       }
     } else {
       return {
-        title: '我是分享好友的',
-        path: '/pages/detail/detail?alldata=' + JSON.stringify(this.data.alldata)
+        title: that.data.alldata.name,
+        path: '/pages/detail/detail?alldata=' + JSON.stringify(that.data.alldata)
       }
     }
   }

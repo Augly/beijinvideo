@@ -5,7 +5,7 @@
     "pages/detail/detail"
   ],
   "window":{
-    "backgroundColor": "RGBA(22, 15, 46, 1)",
+    "backgroundColor":"#0b0718",
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTextStyle":"black"

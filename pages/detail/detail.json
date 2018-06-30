@@ -1,5 +1,4 @@
 {
-  "enablePullDownRefresh": true,
   "navigationBarTitleText": "每周热搜",
   "usingComponents": {
     "videoGroup": "/Component/AuglyVideo"

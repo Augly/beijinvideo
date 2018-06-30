@@ -30,7 +30,14 @@ Page({
       mask: true,
     })
     var that = this
+
+   this.rem(594)
+    console.log(480)
+    console.log(options.alldata)
     var alldata = JSON.parse(options.alldata);
+    this.setData({
+      alldataone: alldata
+    })
     wx.setNavigationBarTitle({
       title: alldata.title,
     })
@@ -112,6 +119,38 @@ Page({
    */
   myvideoPlay: function (e) {
     console.log(e)
+    var that=this
+    // this.goTop()
+    var mh = e.detail.index*499;
+    mh=mh+162
+    var amh = mh * this.data.sheight/750
+    var alldata = JSON.parse(e.detail.alldata);
+    this.setData({
+      alldataone: alldata,
+      scrollTop: amh
+    })
+    wx.setNavigationBarTitle({
+      title: alldata.title,
+    })
+    config.ajax('POST', {
+      id: alldata.id
+    }, config.videoPlay, (res) => {
+      if (res.data.statusMsg == "success") {
+        alldata.videoUrl = res.data.data
+        that.setData({
+          alldata: alldata,
+          playmyvideo: 'myvideo',
+          playmymid: alldata.id
+        })
+        myvideoContext = wx.createVideoContext('myVideo' + alldata.id)
+        myvideoContext.play()
+        that.getlistHot()
+        that.getAps()
+      }
+
+    }, (res) => {
+
+    })
     if (this.data.playmyvideo != null && this.data.playmymid != null) {
       myvideoContext.seek(0)
       myvideoContext.pause()
@@ -121,6 +160,33 @@ Page({
       })
     }
   },
+  rem(height) {
+    var that=this
+    var myheight=''
+    wx.getSystemInfo({
+      success: (res) => {
+        if (height == undefined || height == null) {
+
+            myheight=res.windowHeight
+
+        } else {
+
+            myheight=res.windowHeight - res.windowWidth / 750 * height
+        
+        }
+        that.setData({
+          myheight: myheight,
+          sheight: res.windowWidth
+        })
+      },
+    })
+
+  },
+  // goTop: function (e) {
+  //   this.setData({
+  //     scrollTop: 0
+  //   })
+  // },
   /**
   * 获取热点视频列表
   */
@@ -144,7 +210,7 @@ Page({
 
   },
   myplay(e) {
-    console.log(1)
+    
   },
   /**
    * 生命周期函数--监听页面显示
@@ -169,35 +235,54 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-    var that = this
-    wx.showNavigationBarLoading()
-    wx.showLoading({
-      title: '数据加载中...',
-      mask: true,
-    })
-    // myvideoContext = wx.createVideoContext('myVideo' + alldata.id)
-    // myvideoContext.play()
-    that.getlistHot()
-    that.getAps()
-    wx.hideNavigationBarLoading()
-    wx.stopPullDownRefresh()
-    this.setData({
-      playIndex: null
-    })
-  },
+  // onPullDownRefresh: function () {
+  //   var that = this
+  //   // wx.showNavigationBarLoading()
+  //   wx.showLoading({
+  //     title: '数据加载中...',
+  //     mask: true,
+  //   })
+  //   // myvideoContext = wx.createVideoContext('myVideo' + alldata.id)
+  //   // myvideoContext.play()
+  //   that.getlistHot()
+  //   that.getAps()
+   
+  //   this.setData({
+  //     playIndex: null
+  //   })
+  //   // wx.hideNavigationBarLoading()
+  //   wx.stopPullDownRefresh()
+  // },
 
-  /**
+  // /**
+  //  * 页面上拉触底事件的处理函数
+  //  */
+  // onReachBottom: function () {
+  //   var that=this
+  //   page++
+  //   that.setData({
+  //     moretype: '正在加载中~'
+  //   })
+  //   setTimeout(()=>{
+  //     that.getlistHot()
+  //     that.setData({
+  //       nodata: true,
+  //       playIndex: null
+  //     })
+  //   }, 2000)
+
+  // },
+    /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-    var that=this
+  more: function() {
+    var that = this
     page++
     that.setData({
       moretype: '正在加载中~'
     })
-    setTimeout(()=>{
-      that.getvideoList()
+    setTimeout(() => {
+      that.getlistHot()
       that.setData({
         nodata: true,
         playIndex: null
@@ -209,13 +294,16 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
+    var that=this
+    var alldataone = that.data.alldataone
+    alldataone.videoUrl=''
     if (res.from === 'button') {
 
       if (res.target.dataset.id == '分享好友') {
 
         return {
-          title: '我是分享好友的',
-          path: '/pages/share/share?alldata=' + JSON.stringify(this.data.alldata)
+          title: alldataone.title,
+          path: '/pages/share/share?alldata=' + JSON.stringify(alldataone)
         }
       } else {
         config.ajax('POST', {
@@ -241,8 +329,8 @@ Page({
       }
     } else {
       return {
-        title: '我是分享好友的',
-        path: '/pages/share/share?alldata=' + JSON.stringify(this.data.alldata)
+        title: alldataone.title,
+        path: '/pages/share/share?alldata=' + JSON.stringify(alldataone)
       }
     }
   }

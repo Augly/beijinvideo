@@ -35,7 +35,6 @@ Component({
     showShare:true
   },
   created:function(){
-    console.log(this.data.aps)
   },
   /**
    * 组件的方法列表
@@ -43,7 +42,7 @@ Component({
   methods: {
     //播放视频相关方法
     videoPlay:function(e){
-      if (this.data.page=='share'){
+      if (this.data.page=='shareone'){
         var videoList = this.data.videoList
         var index = e.currentTarget.dataset.index
         var id = e.currentTarget.id
@@ -94,14 +93,28 @@ Component({
           duration: e.currentTarget.dataset.duration,
           allnum: e.currentTarget.dataset.allnum
         }
-        wx.redirectTo({
-          url: '/pages/share/share?alldata=' + JSON.stringify(alldata),
-          success: function(res) {
+        if(this.data.page=='share'){
+          var myEventDetail = {
+            alldata: JSON.stringify(alldata),
+            index: e.currentTarget.dataset.index
+          } //
+          var myEventOption = {
 
-          },
-          fail: function(res) {},
-          complete: function(res) {},
-        })
+          } // 触发事件的选项
+        }else{
+          wx.navigateTo({
+            url: '/pages/share/share?alldata=' + JSON.stringify(alldata),
+            success: function (res) {
+
+            },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }
+
+
+
+        this.triggerEvent('videoPlay', myEventDetail, myEventOption)
         // return {
         //   title: alldata.title,
         //   path: '/pages/share/share?alldata=' + JSON.stringify(alldata),
@@ -110,7 +123,7 @@ Component({
       } 
     },
     submitInfo(e) {
-      if (app.globalData.isSubscibe){
+      if (!app.globalData.isSubscibe){
         var params = {
           openId: app.globalData.openid,
           formId: e.detail.formId,

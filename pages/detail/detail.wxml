@@ -10,7 +10,7 @@
     </view>
 
     <view class='headTopMain'>
-      #{{name}}#
+      {{name}}
     </view>
     <view class='headBottom'>
       共为你找到{{allnum}}个视频
@@ -29,13 +29,14 @@
       {{moretype}}
       <image wx:if="{{moretype=='正在加载中~'}}" src="http://daka.wx.bronet.cn/public/myimg/loading.gif" class="Load_icon"></image>
     </view>
-    <view class='bottomGroup'>
-      <view class='bGitem' bindtap='toindex'>
-        更多视频
-      </view>
-      <button class='bGitem' open-type='share' data-id='分享好友'>
-        分享给好友
-      </button>
+
+  </view>
+  <view class='bottomGroup'>
+    <view class='bGitem' bindtap='toindex'>
+      更多视频
     </view>
+    <button class='bGitem' open-type='share' data-id='分享好友'>
+      分享给好友
+    </button>
   </view>
 </view>

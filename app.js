@@ -5,7 +5,27 @@ App({
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
   onLaunch: function () {
+    var that=this
+    wx.login({
+      success: (res) => {
+        config.ajax('POST', {
+          wxcode: res.code
+        }, config.wxLogin, (res) => {
+          that.globalData.openid = res.data.data.openId
+          config.ajax('POST', {
+            openId: res.data.data.openId
+          }, config.isSubscibe, (res) => {
+            that.globalData.isSubscibe = res.data.data
+          }, (res) => {
 
+          })
+        }, (res) => {
+
+        })
+      },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   },
 
   /**
